@@ -60,6 +60,10 @@ namespace SimpleBarcodeWriterDemo
             Close();
         }
 
+        #endregion
+
+        #region Barcode Image menu
+
         private void saveAsToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (saveBarcodeImageDialog.ShowDialog() == DialogResult.OK)
@@ -69,8 +73,28 @@ namespace SimpleBarcodeWriterDemo
                 }
         }
 
-        #endregion
+        private void barcodeImageSizeToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            using (BarcodeDemo.GetSizeForm form = new BarcodeDemo.GetSizeForm())
+            {
+                form.WidthValue = (float)barcodeWriterControl.BarcodeImageWidth;
+                form.HeightValue = (float)barcodeWriterControl.BarcodeImageHeight;
+                form.UnitsValue = barcodeWriterControl.BarcodeImageSizeUnits;
+                form.ResolutionValue = (float)barcodeWriterControl.Settings.Resolution;
 
+                if (form.ShowDialog() == DialogResult.OK)
+                {
+                    barcodeWriterControl.BeginInit();
+                    barcodeWriterControl.BarcodeImageWidth = form.WidthValue;
+                    barcodeWriterControl.BarcodeImageHeight = form.HeightValue;
+                    barcodeWriterControl.BarcodeImageSizeUnits = form.UnitsValue;
+                    barcodeWriterControl.Settings.Resolution = form.ResolutionValue;
+                    barcodeWriterControl.EndInit();
+                }
+            }
+        }
+
+        #endregion
 
         #region View menu
 
@@ -108,6 +132,7 @@ namespace SimpleBarcodeWriterDemo
 
         #endregion
 
+      
         #endregion
 
     }

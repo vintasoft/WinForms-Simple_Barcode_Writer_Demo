@@ -33,7 +33,6 @@
             this.panel3 = new System.Windows.Forms.Panel();
             this.mainMenuStrip1 = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.saveAsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.viewToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.centerImageToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -47,6 +46,9 @@
             this.panel4 = new System.Windows.Forms.Panel();
             this.barcodeWriterSettingsControl1 = new BarcodeDemo.Controls.BarcodeWriterSettingsControl();
             this.saveBarcodeImageDialog = new System.Windows.Forms.SaveFileDialog();
+            this.barcodeImageToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.barcodeImageSizeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.saveAsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.panel3.SuspendLayout();
             this.mainMenuStrip1.SuspendLayout();
             this.panel1.SuspendLayout();
@@ -68,6 +70,7 @@
             // 
             this.mainMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.fileToolStripMenuItem,
+            this.barcodeImageToolStripMenuItem,
             this.viewToolStripMenuItem});
             this.mainMenuStrip1.Location = new System.Drawing.Point(0, 0);
             this.mainMenuStrip1.Name = "mainMenuStrip1";
@@ -78,23 +81,15 @@
             // fileToolStripMenuItem
             // 
             this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.saveAsToolStripMenuItem,
             this.exitToolStripMenuItem});
             this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
             this.fileToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
             this.fileToolStripMenuItem.Text = "File";
             // 
-            // saveAsToolStripMenuItem
-            // 
-            this.saveAsToolStripMenuItem.Name = "saveAsToolStripMenuItem";
-            this.saveAsToolStripMenuItem.Size = new System.Drawing.Size(123, 22);
-            this.saveAsToolStripMenuItem.Text = "Save As...";
-            this.saveAsToolStripMenuItem.Click += new System.EventHandler(this.saveAsToolStripMenuItem_Click);
-            // 
             // exitToolStripMenuItem
             // 
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(123, 22);
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.exitToolStripMenuItem.Text = "Exit";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
             // 
@@ -115,7 +110,7 @@
             this.centerImageToolStripMenuItem.Checked = true;
             this.centerImageToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
             this.centerImageToolStripMenuItem.Name = "centerImageToolStripMenuItem";
-            this.centerImageToolStripMenuItem.Size = new System.Drawing.Size(147, 22);
+            this.centerImageToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.centerImageToolStripMenuItem.Text = "Center Image";
             this.centerImageToolStripMenuItem.Click += new System.EventHandler(this.sizeModeToolStripMenuItem_Click);
             // 
@@ -123,7 +118,7 @@
             // 
             this.autoSizeToolStripMenuItem.CheckOnClick = true;
             this.autoSizeToolStripMenuItem.Name = "autoSizeToolStripMenuItem";
-            this.autoSizeToolStripMenuItem.Size = new System.Drawing.Size(147, 22);
+            this.autoSizeToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.autoSizeToolStripMenuItem.Text = "Auto Size";
             this.autoSizeToolStripMenuItem.Click += new System.EventHandler(this.sizeModeToolStripMenuItem_Click);
             // 
@@ -131,7 +126,7 @@
             // 
             this.normalToolStripMenuItem.CheckOnClick = true;
             this.normalToolStripMenuItem.Name = "normalToolStripMenuItem";
-            this.normalToolStripMenuItem.Size = new System.Drawing.Size(147, 22);
+            this.normalToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.normalToolStripMenuItem.Text = "Normal";
             this.normalToolStripMenuItem.Click += new System.EventHandler(this.sizeModeToolStripMenuItem_Click);
             // 
@@ -139,7 +134,7 @@
             // 
             this.zoomToolStripMenuItem.CheckOnClick = true;
             this.zoomToolStripMenuItem.Name = "zoomToolStripMenuItem";
-            this.zoomToolStripMenuItem.Size = new System.Drawing.Size(147, 22);
+            this.zoomToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.zoomToolStripMenuItem.Text = "Zoom";
             this.zoomToolStripMenuItem.Click += new System.EventHandler(this.sizeModeToolStripMenuItem_Click);
             // 
@@ -147,7 +142,7 @@
             // 
             this.stretchImageToolStripMenuItem.CheckOnClick = true;
             this.stretchImageToolStripMenuItem.Name = "stretchImageToolStripMenuItem";
-            this.stretchImageToolStripMenuItem.Size = new System.Drawing.Size(147, 22);
+            this.stretchImageToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.stretchImageToolStripMenuItem.Text = "Stretch Image";
             this.stretchImageToolStripMenuItem.Click += new System.EventHandler(this.sizeModeToolStripMenuItem_Click);
             // 
@@ -174,6 +169,9 @@
             // 
             // barcodeWriterControl
             // 
+            this.barcodeWriterControl.BarcodeImageHeight = 0;
+            this.barcodeWriterControl.BarcodeImageSizeUnits = Vintasoft.Barcode.UnitOfMeasure.Pixels;
+            this.barcodeWriterControl.BarcodeImageWidth = 0;
             this.barcodeWriterControl.BarcodeSymbologySubset = null;
             this.barcodeWriterControl.Dock = System.Windows.Forms.DockStyle.Fill;
             this.barcodeWriterControl.Location = new System.Drawing.Point(0, 0);
@@ -214,6 +212,29 @@
             // 
             this.saveBarcodeImageDialog.Filter = "PNG files|*.png";
             // 
+            // barcodeImageToolStripMenuItem
+            // 
+            this.barcodeImageToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.barcodeImageSizeToolStripMenuItem,
+            this.saveAsToolStripMenuItem});
+            this.barcodeImageToolStripMenuItem.Name = "barcodeImageToolStripMenuItem";
+            this.barcodeImageToolStripMenuItem.Size = new System.Drawing.Size(98, 20);
+            this.barcodeImageToolStripMenuItem.Text = "Barcode Image";
+            // 
+            // barcodeImageSizeToolStripMenuItem
+            // 
+            this.barcodeImageSizeToolStripMenuItem.Name = "barcodeImageSizeToolStripMenuItem";
+            this.barcodeImageSizeToolStripMenuItem.Size = new System.Drawing.Size(159, 22);
+            this.barcodeImageSizeToolStripMenuItem.Text = "Set Image Size...";
+            this.barcodeImageSizeToolStripMenuItem.Click += new System.EventHandler(this.barcodeImageSizeToolStripMenuItem_Click);
+            // 
+            // saveAsToolStripMenuItem
+            // 
+            this.saveAsToolStripMenuItem.Name = "saveAsToolStripMenuItem";
+            this.saveAsToolStripMenuItem.Size = new System.Drawing.Size(159, 22);
+            this.saveAsToolStripMenuItem.Text = "Save Image As...";
+            this.saveAsToolStripMenuItem.Click += new System.EventHandler(this.saveAsToolStripMenuItem_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -247,7 +268,6 @@
         private Vintasoft.Barcode.BarcodeWriterControl barcodeWriterControl;
         private System.Windows.Forms.Panel panel4;
         private System.Windows.Forms.SaveFileDialog saveBarcodeImageDialog;
-        private System.Windows.Forms.ToolStripMenuItem saveAsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem viewToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem centerImageToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem autoSizeToolStripMenuItem;
@@ -255,6 +275,9 @@
         private System.Windows.Forms.ToolStripMenuItem zoomToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem stretchImageToolStripMenuItem;
         private BarcodeDemo.Controls.BarcodeWriterSettingsControl barcodeWriterSettingsControl1;
+        private System.Windows.Forms.ToolStripMenuItem barcodeImageToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem barcodeImageSizeToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem saveAsToolStripMenuItem;
 
 
 
