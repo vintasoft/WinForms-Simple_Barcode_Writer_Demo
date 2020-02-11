@@ -28,12 +28,14 @@
         /// </summary>
         private void InitializeComponent()
         {
-            Vintasoft.Barcode.WriterSettings writerSettings1 = new Vintasoft.Barcode.WriterSettings();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.panel3 = new System.Windows.Forms.Panel();
             this.mainMenuStrip1 = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.barcodeImageToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.barcodeImageSizeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.saveAsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.viewToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.centerImageToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.autoSizeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -42,13 +44,12 @@
             this.stretchImageToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.panel1 = new System.Windows.Forms.Panel();
             this.panel2 = new System.Windows.Forms.Panel();
-            this.barcodeWriterControl = new Vintasoft.Barcode.BarcodeWriterControl();
+            this.barcodeWriterControl = new BarcodeDemo.Controls.BarcodeWriterControl();
             this.panel4 = new System.Windows.Forms.Panel();
             this.barcodeWriterSettingsControl1 = new BarcodeDemo.Controls.BarcodeWriterSettingsControl();
             this.saveBarcodeImageDialog = new System.Windows.Forms.SaveFileDialog();
-            this.barcodeImageToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.barcodeImageSizeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.saveAsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.saveAsSVGFileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.saveSvgFileDialog = new System.Windows.Forms.SaveFileDialog();
             this.panel3.SuspendLayout();
             this.mainMenuStrip1.SuspendLayout();
             this.panel1.SuspendLayout();
@@ -89,9 +90,33 @@
             // exitToolStripMenuItem
             // 
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(92, 22);
             this.exitToolStripMenuItem.Text = "Exit";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
+            // 
+            // barcodeImageToolStripMenuItem
+            // 
+            this.barcodeImageToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.barcodeImageSizeToolStripMenuItem,
+            this.saveAsToolStripMenuItem,
+            this.saveAsSVGFileToolStripMenuItem});
+            this.barcodeImageToolStripMenuItem.Name = "barcodeImageToolStripMenuItem";
+            this.barcodeImageToolStripMenuItem.Size = new System.Drawing.Size(98, 20);
+            this.barcodeImageToolStripMenuItem.Text = "Barcode Image";
+            // 
+            // barcodeImageSizeToolStripMenuItem
+            // 
+            this.barcodeImageSizeToolStripMenuItem.Name = "barcodeImageSizeToolStripMenuItem";
+            this.barcodeImageSizeToolStripMenuItem.Size = new System.Drawing.Size(168, 22);
+            this.barcodeImageSizeToolStripMenuItem.Text = "Set Image Size...";
+            this.barcodeImageSizeToolStripMenuItem.Click += new System.EventHandler(this.barcodeImageSizeToolStripMenuItem_Click);
+            // 
+            // saveAsToolStripMenuItem
+            // 
+            this.saveAsToolStripMenuItem.Name = "saveAsToolStripMenuItem";
+            this.saveAsToolStripMenuItem.Size = new System.Drawing.Size(168, 22);
+            this.saveAsToolStripMenuItem.Text = "Save Image As...";
+            this.saveAsToolStripMenuItem.Click += new System.EventHandler(this.saveAsToolStripMenuItem_Click);
             // 
             // viewToolStripMenuItem
             // 
@@ -172,6 +197,7 @@
             this.barcodeWriterControl.BarcodeImageHeight = 0;
             this.barcodeWriterControl.BarcodeImageSizeUnits = Vintasoft.Barcode.UnitOfMeasure.Pixels;
             this.barcodeWriterControl.BarcodeImageWidth = 0;
+            this.barcodeWriterControl.BarcodeRenderer = null;
             this.barcodeWriterControl.BarcodeSymbologySubset = null;
             this.barcodeWriterControl.Dock = System.Windows.Forms.DockStyle.Fill;
             this.barcodeWriterControl.Location = new System.Drawing.Point(0, 0);
@@ -192,15 +218,6 @@
             // 
             // barcodeWriterSettingsControl1
             // 
-            writerSettings1.BackColor = System.Drawing.Color.White;
-            writerSettings1.Barcode = Vintasoft.Barcode.BarcodeType.Code128;
-            writerSettings1.ForeColor = System.Drawing.Color.Black;
-            writerSettings1.MicroPDF417Symbol = Vintasoft.Barcode.BarcodeInfo.MicroPDF417SymbolType.Undefined;
-            writerSettings1.PixelFormat = Vintasoft.Barcode.BarcodeImagePixelFormat.Bgr24;
-            writerSettings1.Value = "012345";
-            writerSettings1.ValueFont = new System.Drawing.Font("Courier New", 12F);
-            writerSettings1.ValueItems = null;
-            this.barcodeWriterSettingsControl1.BarcodeWriterSettings = writerSettings1;
             this.barcodeWriterSettingsControl1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.barcodeWriterSettingsControl1.Location = new System.Drawing.Point(2, 0);
             this.barcodeWriterSettingsControl1.Name = "barcodeWriterSettingsControl1";
@@ -212,28 +229,17 @@
             // 
             this.saveBarcodeImageDialog.Filter = "PNG files|*.png";
             // 
-            // barcodeImageToolStripMenuItem
+            // saveAsSVGFileToolStripMenuItem
             // 
-            this.barcodeImageToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.barcodeImageSizeToolStripMenuItem,
-            this.saveAsToolStripMenuItem});
-            this.barcodeImageToolStripMenuItem.Name = "barcodeImageToolStripMenuItem";
-            this.barcodeImageToolStripMenuItem.Size = new System.Drawing.Size(98, 20);
-            this.barcodeImageToolStripMenuItem.Text = "Barcode Image";
+            this.saveAsSVGFileToolStripMenuItem.Name = "saveAsSVGFileToolStripMenuItem";
+            this.saveAsSVGFileToolStripMenuItem.Size = new System.Drawing.Size(168, 22);
+            this.saveAsSVGFileToolStripMenuItem.Text = "Save As SVG File...";
+            this.saveAsSVGFileToolStripMenuItem.Click += new System.EventHandler(this.saveAsSVGFileToolStripMenuItem_Click);
             // 
-            // barcodeImageSizeToolStripMenuItem
+            // saveSvgFileDialog
             // 
-            this.barcodeImageSizeToolStripMenuItem.Name = "barcodeImageSizeToolStripMenuItem";
-            this.barcodeImageSizeToolStripMenuItem.Size = new System.Drawing.Size(159, 22);
-            this.barcodeImageSizeToolStripMenuItem.Text = "Set Image Size...";
-            this.barcodeImageSizeToolStripMenuItem.Click += new System.EventHandler(this.barcodeImageSizeToolStripMenuItem_Click);
-            // 
-            // saveAsToolStripMenuItem
-            // 
-            this.saveAsToolStripMenuItem.Name = "saveAsToolStripMenuItem";
-            this.saveAsToolStripMenuItem.Size = new System.Drawing.Size(159, 22);
-            this.saveAsToolStripMenuItem.Text = "Save Image As...";
-            this.saveAsToolStripMenuItem.Click += new System.EventHandler(this.saveAsToolStripMenuItem_Click);
+            this.saveSvgFileDialog.DefaultExt = "svg";
+            this.saveSvgFileDialog.Filter = "SVG (*.svg)|*.svg";
             // 
             // MainForm
             // 
@@ -265,7 +271,7 @@
         private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Panel panel2;
-        private Vintasoft.Barcode.BarcodeWriterControl barcodeWriterControl;
+        private BarcodeDemo.Controls.BarcodeWriterControl barcodeWriterControl;
         private System.Windows.Forms.Panel panel4;
         private System.Windows.Forms.SaveFileDialog saveBarcodeImageDialog;
         private System.Windows.Forms.ToolStripMenuItem viewToolStripMenuItem;
@@ -278,6 +284,8 @@
         private System.Windows.Forms.ToolStripMenuItem barcodeImageToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem barcodeImageSizeToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem saveAsToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem saveAsSVGFileToolStripMenuItem;
+        private System.Windows.Forms.SaveFileDialog saveSvgFileDialog;
 
 
 

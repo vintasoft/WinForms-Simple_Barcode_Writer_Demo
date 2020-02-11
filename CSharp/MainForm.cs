@@ -1,9 +1,10 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Drawing;
 using System.Windows.Forms;
+using System.IO;
 
 using Vintasoft.Barcode;
-
 
 namespace SimpleBarcodeWriterDemo
 {
@@ -66,12 +67,35 @@ namespace SimpleBarcodeWriterDemo
 
         private void saveAsToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (saveBarcodeImageDialog.ShowDialog() == DialogResult.OK)
+            if (saveBarcodeImageDialog.ShowDialog() == DialogResult.OK)                
                 using (Image barcodeImage = barcodeWriterControl.GetBarcodeAsImage())
                 {
                     barcodeImage.Save(saveBarcodeImageDialog.FileName);
                 }
         }
+
+        /// <summary>
+        /// Saves image with barcode as SVG file.
+        /// </summary>
+        private void saveAsSVGFileToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (barcodeWriterSettingsControl1.EncodeValue())
+            {
+                if (saveSvgFileDialog.ShowDialog() == DialogResult.OK)
+                {
+                    if (BarcodeGlobalSettings.IsDemoVersion)
+                    {
+                        MessageBox.Show("The evaluation version adds noise to the barcode image.", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
+                    string svgFile = barcodeWriterControl.Writer.GetBarcodeAsSvgFile();
+                    File.WriteAllText(saveSvgFileDialog.FileName, svgFile);
+                    ProcessStartInfo processInfo = new ProcessStartInfo(saveSvgFileDialog.FileName);
+                    processInfo.UseShellExecute = true;
+                    Process.Start(processInfo);
+                }
+            }
+        }
+     
 
         private void barcodeImageSizeToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -84,6 +108,10 @@ namespace SimpleBarcodeWriterDemo
 
                 if (form.ShowDialog() == DialogResult.OK)
                 {
+                    if (BarcodeGlobalSettings.IsDemoVersion)
+                    {
+                        MessageBox.Show("The evaluation version adds noise to the barcode image.", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
                     barcodeWriterControl.BeginInit();
                     barcodeWriterControl.BarcodeImageWidth = form.WidthValue;
                     barcodeWriterControl.BarcodeImageHeight = form.HeightValue;
@@ -108,7 +136,6 @@ namespace SimpleBarcodeWriterDemo
 
         #endregion
 
-
         #region Events
         
         void barcodeWriterControl_BarcodeImageChanged(object sender, BarcodeImageChangedEventArgs e)
@@ -132,7 +159,6 @@ namespace SimpleBarcodeWriterDemo
 
         #endregion
 
-      
         #endregion
 
     }
