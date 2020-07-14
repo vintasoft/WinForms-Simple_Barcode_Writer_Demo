@@ -87,11 +87,20 @@ namespace SimpleBarcodeWriterDemo
                     {
                         MessageBox.Show("The evaluation version adds noise to the barcode image.", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }
-                    string svgFile = barcodeWriterControl.Writer.GetBarcodeAsSvgFile();
-                    File.WriteAllText(saveSvgFileDialog.FileName, svgFile);
-                    ProcessStartInfo processInfo = new ProcessStartInfo(saveSvgFileDialog.FileName);
-                    processInfo.UseShellExecute = true;
-                    Process.Start(processInfo);
+
+                    try
+                    {
+                        string svgFile = barcodeWriterControl.Writer.GetBarcodeAsSvgFile();
+                        File.WriteAllText(saveSvgFileDialog.FileName, svgFile);
+
+                        ProcessStartInfo processInfo = new ProcessStartInfo(saveSvgFileDialog.FileName);
+                        processInfo.UseShellExecute = true;
+                        Process.Start(processInfo);
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show(ex.Message, ex.GetType().Name, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
                 }
             }
         }
