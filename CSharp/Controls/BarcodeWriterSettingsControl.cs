@@ -32,6 +32,11 @@ namespace BarcodeDemo.Controls
         MailmarkCmdmValueItem _mailmarkCmdmValueItem = new MailmarkCmdmValueItem();
 
         /// <summary>
+        /// The Swiss QR Code value item.
+        /// </summary>
+        SwissQRCodeValueItem _swissQRCodeValueItem = new SwissQRCodeValueItem();
+
+        /// <summary>
         /// The PPN barcode value.
         /// </summary>
         PpnBarcodeValue _ppnBarcodeValue = new PpnBarcodeValue();
@@ -179,6 +184,7 @@ namespace BarcodeDemo.Controls
             twoDimensionalBarcodeComboBox.Items.Add(BarcodeSymbologySubsets.HIBCLICAztecCode);
             twoDimensionalBarcodeComboBox.Items.Add(BarcodeSymbologySubsets.HIBCLICDataMatrix);
             twoDimensionalBarcodeComboBox.Items.Add(BarcodeSymbologySubsets.HIBCLICQRCode);
+            twoDimensionalBarcodeComboBox.Items.Add(BarcodeSymbologySubsets.SwissQRCode);
             twoDimensionalBarcodeComboBox.SelectedItem = BarcodeType.DataMatrix;
 
             // fonts
@@ -578,6 +584,11 @@ namespace BarcodeDemo.Controls
                     //  encode Mailmark barcode value
                     SelectedBarcodeSubset.Encode(_mailmarkCmdmValueItem, BarcodeWriterSettings);
                 }
+                else if (SelectedBarcodeSubset is SwissQRCodeBarcodeSymbology)
+                {
+                    //  encode Swiss QR Code barcode value
+                    SelectedBarcodeSubset.Encode(_swissQRCodeValueItem, BarcodeWriterSettings);
+                }
                 else if (SelectedBarcodeSubset is PpnBarcodeSymbology)
                 {
                     //  encode PPN barcode value
@@ -736,8 +747,8 @@ namespace BarcodeDemo.Controls
             }
             else
             {
-                barcodeType = SelectedBarcodeSubset.BaseType;
-                switch (SelectedBarcodeSubset.BaseType)
+                barcodeType = SelectedBarcodeSubset.BarcodeType;
+                switch (SelectedBarcodeSubset.BarcodeType)
                 {
                     case BarcodeType.MSI:
                     case BarcodeType.Code11:
@@ -796,25 +807,30 @@ namespace BarcodeDemo.Controls
 
         private void valueAutoLetterSpacingCheckBox_CheckedChanged(object sender, EventArgs e)
         {
-            BarcodeWriterSettings.ValueAutoLetterSpacing = valueAutoLetterSpacingCheckBox.Checked;
+            if (BarcodeWriterSettings != null)
+                BarcodeWriterSettings.ValueAutoLetterSpacing = valueAutoLetterSpacingCheckBox.Checked;
         }
 
         private void valueVisibleCheckBox_CheckedChanged(object sender, EventArgs e)
         {
-            bool enabled = valueVisibleCheckBox.Checked;
-            valueAutoLetterSpacingCheckBox.Enabled = enabled;
-            valueGapNumericUpDown.Enabled = enabled;
-            valueFontSizeNumericUpDown.Enabled = enabled;
-            fontSelector.Enabled = enabled;
-            if (barcodeGroupsTabControl.SelectedTab == linearBarcodesTabPage)
-                BarcodeWriterSettings.ValueVisible = valueVisibleCheckBox.Checked;
-            else
-                BarcodeWriterSettings.Value2DVisible = valueVisibleCheckBox.Checked;
+            if (BarcodeWriterSettings != null)
+            {
+                bool enabled = valueVisibleCheckBox.Checked;
+                valueAutoLetterSpacingCheckBox.Enabled = enabled;
+                valueGapNumericUpDown.Enabled = enabled;
+                valueFontSizeNumericUpDown.Enabled = enabled;
+                fontSelector.Enabled = enabled;
+                if (barcodeGroupsTabControl.SelectedTab == linearBarcodesTabPage)
+                    BarcodeWriterSettings.ValueVisible = valueVisibleCheckBox.Checked;
+                else
+                    BarcodeWriterSettings.Value2DVisible = valueVisibleCheckBox.Checked;
+            }
         }
 
         private void valueGapNumericUpDown_ValueChanged(object sender, EventArgs e)
         {
-            BarcodeWriterSettings.ValueGap = (int)valueGapNumericUpDown.Value;
+            if (BarcodeWriterSettings != null)
+                BarcodeWriterSettings.ValueGap = (int)valueGapNumericUpDown.Value;
         }
 
         private void fontSelector_SelectedIndexChanged(object sender, EventArgs e)
@@ -860,7 +876,7 @@ namespace BarcodeDemo.Controls
                     BarcodeSymbologySubset barcodeSubset = twoDimensionalBarcodeComboBox.SelectedItem as BarcodeSymbologySubset;
                     BarcodeType baseBarcodeType;
                     if (barcodeSubset != null)
-                        baseBarcodeType = barcodeSubset.BaseType;
+                        baseBarcodeType = barcodeSubset.BarcodeType;
                     else
                         baseBarcodeType = (BarcodeType)twoDimensionalBarcodeComboBox.SelectedItem;
 
@@ -947,6 +963,7 @@ namespace BarcodeDemo.Controls
             if (SelectedBarcodeSubset != null &&
                 SelectedBarcodeSubset is GS1BarcodeSymbologySubset ||
                 SelectedBarcodeSubset is MailmarkCmdmBarcodeSymbology ||
+                SelectedBarcodeSubset is SwissQRCodeBarcodeSymbology ||
                 SelectedBarcodeSubset is PpnBarcodeSymbology)
                 useCustomValueDialog = true;
             subsetBarcodeValueButton.Visible = useCustomValueDialog;
@@ -969,6 +986,17 @@ namespace BarcodeDemo.Controls
             else if (SelectedBarcodeSubset is MailmarkCmdmBarcodeSymbology)
             {
                 using (PropertyGridForm form = new PropertyGridForm(_mailmarkCmdmValueItem, "Mailmark CMDM value", false))
+                {
+                    form.PropertyGrid.PropertySort = PropertySort.NoSort;
+                    if (form.ShowDialog() == DialogResult.OK)
+                    {
+                        EncodeValue();
+                    }
+                }
+            }
+            else if (SelectedBarcodeSubset is SwissQRCodeBarcodeSymbology)
+            {
+                using (PropertyGridForm form = new PropertyGridForm(_swissQRCodeValueItem, "Swiss QR Code value", false))
                 {
                     form.PropertyGrid.PropertySort = PropertySort.NoSort;
                     if (form.ShowDialog() == DialogResult.OK)
@@ -1069,7 +1097,7 @@ namespace BarcodeDemo.Controls
             BarcodeSymbologySubset barcodeSubset = twoDimensionalBarcodeComboBox.SelectedItem as BarcodeSymbologySubset;
             BarcodeType baseBarcodeType;
             if (barcodeSubset != null)
-                baseBarcodeType = barcodeSubset.BaseType;
+                baseBarcodeType = barcodeSubset.BarcodeType;
             else
                 baseBarcodeType = (BarcodeType)twoDimensionalBarcodeComboBox.SelectedItem;
 
