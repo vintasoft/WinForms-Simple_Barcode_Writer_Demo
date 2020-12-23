@@ -2188,7 +2188,6 @@ namespace BarcodeDemo.Controls
             // 
             // BarcodeWriterSettingsControl
             // 
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.mainPanel);
             this.Name = "BarcodeWriterSettingsControl";
             this.Size = new System.Drawing.Size(265, 530);

@@ -264,7 +264,6 @@ namespace BarcodeDemo
             // GS1ValueEditorForm
             // 
             this.AcceptButton = this.okButton;
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.buttonCancel;
             this.ClientSize = new System.Drawing.Size(570, 366);
             this.Controls.Add(this.setPrintableValueButton);

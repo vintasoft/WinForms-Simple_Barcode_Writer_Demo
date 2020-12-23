@@ -170,7 +170,6 @@ namespace BarcodeDemo
             // GetSizeForm
             // 
             this.AcceptButton = this.buttonOK;
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.buttonCancel;
             this.ClientSize = new System.Drawing.Size(210, 159);
             this.Controls.Add(this.heightValueEditor);
