@@ -5,6 +5,7 @@ using System.Drawing.Drawing2D;
 using System.Windows.Forms;
 
 using Vintasoft.Barcode;
+using Vintasoft.Barcode.Gdi;
 using Vintasoft.Barcode.SymbologySubsets;
 
 namespace BarcodeDemo.Controls
@@ -195,7 +196,7 @@ namespace BarcodeDemo.Controls
         }
 
         /// <summary>
-        /// Indicates how the barcode image is displayed.
+        /// Gets or sets a value that indicates how the barcode image is displayed.
         /// </summary>
         /// <returns>
         /// Default value is <see cref="PictureBoxSizeMode"/>.CenterImage.

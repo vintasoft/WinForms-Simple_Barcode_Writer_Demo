@@ -5,9 +5,13 @@ using System.Windows.Forms;
 using System.IO;
 
 using Vintasoft.Barcode;
+using Vintasoft.Barcode.Gdi;
 
 namespace SimpleBarcodeWriterDemo
 {
+    /// <summary>
+    /// The main form of Simple Barcode Writer Demo.
+    /// </summary>
     public partial class MainForm : Form
     {
 
@@ -21,6 +25,22 @@ namespace SimpleBarcodeWriterDemo
 
         #region Constructors
 
+        /// <summary>
+        /// Initializes the <see cref="MainForm"/> class.
+        /// </summary>
+        static MainForm()
+        {
+#if NETCOREAPP
+            System.Text.Encoding.RegisterProvider(System.Text.CodePagesEncodingProvider.Instance);
+#endif
+
+            // initialize Vintasoft.Barcode.Gdi assembly
+            Vintasoft.Barcode.GdiAssembly.Init();
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="MainForm"/> class.
+        /// </summary>
         public MainForm()
         {
             InitializeComponent();
@@ -36,7 +56,7 @@ namespace SimpleBarcodeWriterDemo
             barcodeWriterControl.EndInit();
 
             barcodeWriterControl.BeginInit();
-            barcodeWriterControl.Settings.Changed += new EventHandler(Settings_Changed);
+            barcodeWriterControl.Settings.Changed += new EventHandler(BarcodeWriterSettings_Changed);
 
             barcodeWriterSettingsControl1.BarcodeWriterSettings = barcodeWriterControl.Settings;
 
@@ -46,7 +66,7 @@ namespace SimpleBarcodeWriterDemo
             stretchImageToolStripMenuItem.Tag = PictureBoxSizeMode.StretchImage;
             normalToolStripMenuItem.Tag = PictureBoxSizeMode.Normal;
             _lastSelectedViewMode = centerImageToolStripMenuItem;
-        }       
+        }
 
         #endregion
 
@@ -54,7 +74,7 @@ namespace SimpleBarcodeWriterDemo
 
         #region Methods
 
-        #region File menu
+        #region "File" menu
 
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -63,15 +83,18 @@ namespace SimpleBarcodeWriterDemo
 
         #endregion
 
-        #region Barcode Image menu
+
+        #region "Barcode Image" menu
 
         private void saveAsToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (saveBarcodeImageDialog.ShowDialog() == DialogResult.OK)                
+            if (saveBarcodeImageDialog.ShowDialog() == DialogResult.OK)
+            {
                 using (Image barcodeImage = barcodeWriterControl.GetBarcodeAsImage())
                 {
                     barcodeImage.Save(saveBarcodeImageDialog.FileName);
                 }
+            }
         }
 
         /// <summary>
@@ -104,7 +127,6 @@ namespace SimpleBarcodeWriterDemo
                 }
             }
         }
-     
 
         private void barcodeImageSizeToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -133,7 +155,8 @@ namespace SimpleBarcodeWriterDemo
 
         #endregion
 
-        #region View menu
+
+        #region "View" menu
 
         private void sizeModeToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -145,15 +168,16 @@ namespace SimpleBarcodeWriterDemo
 
         #endregion
 
+
         #region Events
-        
-        void barcodeWriterControl_BarcodeImageChanged(object sender, BarcodeImageChangedEventArgs e)
+
+        private void barcodeWriterControl_BarcodeImageChanged(object sender, BarcodeImageChangedEventArgs e)
         {
             barcodeWriterSettingsControl1.BarcodeImage = e.Image;
             barcodeWriterSettingsControl1.UpdateBarcodeWriterSettings();
         }
 
-        void Settings_Changed(object sender, EventArgs e)
+        private void BarcodeWriterSettings_Changed(object sender, EventArgs e)
         {
             try
             {

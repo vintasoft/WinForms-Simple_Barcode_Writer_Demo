@@ -40,6 +40,9 @@ namespace BarcodeDemo
         #region Properties
 
         WriterSettings _settings = null;
+        /// <summary>
+        /// Get or sets barcode writer settings.
+        /// </summary>
         public WriterSettings Settings
         {
             get

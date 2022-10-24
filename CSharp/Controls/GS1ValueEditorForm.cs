@@ -17,7 +17,7 @@ namespace BarcodeDemo
         #region Fields
 
         /// <summary>
-        /// Indicates that dialog is opened in read-only mode.
+        /// A value indicating whether dialog is opened in read-only mode.
         /// </summary>
         bool _readOnly = false;
 
@@ -78,7 +78,7 @@ namespace BarcodeDemo
 
         GS1ApplicationIdentifierValue[] _GS1ApplicationIdentifierValues;
         /// <summary>
-        /// Gets the GS1 application identifier values.
+        /// Gets the values of GS1 application identifiers.
         /// </summary>
         public GS1ApplicationIdentifierValue[] GS1ApplicationIdentifierValues
         {

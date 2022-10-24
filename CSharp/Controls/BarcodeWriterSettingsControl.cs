@@ -7,8 +7,6 @@ using Vintasoft.Barcode;
 using Vintasoft.Barcode.BarcodeInfo;
 using Vintasoft.Barcode.GS1;
 using Vintasoft.Barcode.SymbologySubsets;
-using Vintasoft.Barcode.SymbologySubsets.GS1;
-using Vintasoft.Barcode.SymbologySubsets.RoyalMailMailmark;
 
 
 namespace BarcodeDemo.Controls
@@ -314,7 +312,7 @@ namespace BarcodeDemo.Controls
 
         BarcodeSymbologySubset _selectedBarcodeSubset = null;
         /// <summary>
-        /// Gets or sets a selected barcode subset.
+        /// Gets or sets selected barcode subset.
         /// </summary>
         public BarcodeSymbologySubset SelectedBarcodeSubset
         {
@@ -331,7 +329,7 @@ namespace BarcodeDemo.Controls
 
         private WriterSettings _barcodeWriterSettings = new WriterSettings();
         /// <summary>
-        /// Gest or sets a writer settings.
+        /// Gets or sets the barcode writer settings.
         /// </summary>
         public WriterSettings BarcodeWriterSettings
         {
@@ -351,8 +349,8 @@ namespace BarcodeDemo.Controls
                         linearBarcodeTypeComboBox.SelectedItem = value.Barcode;
 
                         barcodeValueTextBox.Text = value.Value;
-                        foregroundColorPanel.BackColor = value.ForeColor;
-                        backgroundColorPanel.BackColor = value.BackColor;
+                        foregroundColorPanel.BackColor = GdiConverter.Convert(value.ForeColor);
+                        backgroundColorPanel.BackColor = GdiConverter.Convert(value.BackColor);
                         pixelFormatComboBox.SelectedItem = value.PixelFormat;
                         if (barcodeWidthPanel.Visible)
                             minWidthNumericUpDown.Value = value.MinWidth;
@@ -365,8 +363,16 @@ namespace BarcodeDemo.Controls
                         else
                             valueVisibleCheckBox.Checked = value.Value2DVisible;
                         valueGapNumericUpDown.Value = value.ValueGap;
-                        fontSelector.SelectedItem = value.ValueFont.Name;
-                        valueFontSizeNumericUpDown.Value = (decimal)value.ValueFont.SizeInPoints;
+                        if (value.ValueFont != null)
+                        {
+                            fontSelector.SelectedItem = value.ValueFont.Name;
+                            valueFontSizeNumericUpDown.Value = (decimal)value.ValueFont.Size;
+                        }
+                        else
+                        {
+                            fontSelector.SelectedItem = null;
+                            valueFontSizeNumericUpDown.Value = 12;
+                        }
                         msiChecksumComboBox.SelectedItem = value.MSIChecksum;
                         code128ModeComboBox.SelectedItem = value.Code128EncodingMode;
                         postalADMiltiplierNumericUpDown.Value = (decimal)(value.PostBarcodesADMultiplier * 10.0);
@@ -453,7 +459,7 @@ namespace BarcodeDemo.Controls
 
         bool _canChangeBarcodeSize = true;
         /// <summary>
-        /// Gets or sets a value that indicating when can change barcode size.
+        /// Gets or sets a value indicating whether barcode size can be changed.
         /// </summary>
         [DefaultValue(true)]
         public bool CanChangeBarcodeSize
@@ -472,7 +478,7 @@ namespace BarcodeDemo.Controls
         }
 
         /// <summary>
-        /// Gets a value that indicating when need encode ECI character.
+        /// Gets a value indicating whether ECI character must be encoded.
         /// </summary>
         public bool EncodeEciCharacter
         {
@@ -513,8 +519,8 @@ namespace BarcodeDemo.Controls
             if (colorDialog1.ShowDialog() == DialogResult.OK)
                 foregroundColorPanel.BackColor = colorDialog1.Color;
 
-            if (BarcodeWriterSettings.ForeColor != foregroundColorPanel.BackColor)
-                BarcodeWriterSettings.ForeColor = foregroundColorPanel.BackColor;
+            if (BarcodeWriterSettings.ForeColor != GdiConverter.Convert(foregroundColorPanel.BackColor))
+                BarcodeWriterSettings.ForeColor = GdiConverter.Convert(foregroundColorPanel.BackColor);
         }
 
         private void selectBackgroundColorButton_Click(object sender, EventArgs e)
@@ -524,8 +530,8 @@ namespace BarcodeDemo.Controls
             if (colorDialog1.ShowDialog() == DialogResult.OK)
                 backgroundColorPanel.BackColor = colorDialog1.Color;
 
-            if (BarcodeWriterSettings.BackColor != backgroundColorPanel.BackColor)
-                BarcodeWriterSettings.BackColor = backgroundColorPanel.BackColor;
+            if (BarcodeWriterSettings.BackColor != GdiConverter.Convert(backgroundColorPanel.BackColor))
+                BarcodeWriterSettings.BackColor = GdiConverter.Convert(backgroundColorPanel.BackColor);
         }
 
         private void pixelFormatComboBox_SelectedIndexChanged(object sender, EventArgs e)
@@ -621,7 +627,6 @@ namespace BarcodeDemo.Controls
             }
             return true;
         }
-
 
         private void linearBarcodeTypeComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -840,8 +845,8 @@ namespace BarcodeDemo.Controls
             try
             {
                 if (fontSelector.SelectedItem != null)
-                    BarcodeWriterSettings.ValueFont = new Font(fontSelector.SelectedItem.ToString(),
-                        (float)valueFontSizeNumericUpDown.Value);
+                    BarcodeWriterSettings.ValueFont = GdiConverter.Convert(new Font(fontSelector.SelectedItem.ToString(),
+                        (float)valueFontSizeNumericUpDown.Value));
             }
             catch
             {
@@ -1667,9 +1672,9 @@ namespace BarcodeDemo.Controls
 
         #endregion
 
-        
+
         #region DotCode
-        
+
         private void dotCodeRectangualrModulesCheckBox_CheckedChanged(object sender, EventArgs e)
         {
             if (BarcodeWriterSettings == null)
@@ -1729,7 +1734,7 @@ namespace BarcodeDemo.Controls
         /// <summary>
         /// Called when writer exception occurs.
         /// </summary>
-        /// <param name="exception">The exception.</param>
+        /// <param name="ex">The exception.</param>
         private void OnWriterException(WriterSettingsException ex)
         {
             if (WriterException != null)
@@ -1756,6 +1761,6 @@ namespace BarcodeDemo.Controls
 
         #endregion
 
-      
+
     }
 }
