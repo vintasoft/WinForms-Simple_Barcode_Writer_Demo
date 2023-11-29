@@ -1,0 +1,114 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
+  <PropertyGroup>
+    <TargetFramework>net8.0-windows</TargetFramework>
+    <UseWindowsForms>true</UseWindowsForms>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>SimpleBarcodeWriterDemo</RootNamespace>
+    <AssemblyName>SimpleBarcodeWriterDemo</AssemblyName>
+    <ApplicationIcon>App.ico</ApplicationIcon>
+
+    <EnableDefaultItems>false</EnableDefaultItems>
+
+    <GenerateAssemblyCompanyAttribute>false</GenerateAssemblyCompanyAttribute>
+    <GenerateAssemblyFileVersionAttribute>false</GenerateAssemblyFileVersionAttribute>
+    <GenerateAssemblyVersionAttribute>false</GenerateAssemblyVersionAttribute>  
+    <GenerateAssemblyConfigurationAttribute>false</GenerateAssemblyConfigurationAttribute>
+    <GenerateAssemblyDescriptionAttribute>false</GenerateAssemblyDescriptionAttribute>
+    <GenerateAssemblyProductAttribute>false</GenerateAssemblyProductAttribute>
+    <GenerateAssemblyTitleAttribute>false</GenerateAssemblyTitleAttribute>    
+
+    <Version>14.2.0.1</Version>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="Vintasoft.Barcode" Version="14.2.0.1" />
+    <PackageReference Include="Vintasoft.Barcode.Gdi" Version="14.2.0.1" />
+    <PackageReference Include="Vintasoft.Shared" Version="4.1.0.1" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Controls\BarcodeWriterControl.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Controls\BarcodeWriterSettingsControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\BarcodeWriterSettingsControl.Designer.cs">
+      <DependentUpon>BarcodeWriterSettingsControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\ExceptionEventArgs.cs" />
+    <Compile Include="Controls\GetSizeForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Controls\GetSizeForm.Designer.cs">
+      <DependentUpon>GetSizeForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\GS1ValueEditorForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Controls\GS1ValueEditorForm.Designer.cs">
+      <DependentUpon>GS1ValueEditorForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MainForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MainForm.Designer.cs">
+      <DependentUpon>MainForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="Controls\BarcodeWriterSettingsControl.resx">
+      <DependentUpon>BarcodeWriterSettingsControl.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\GetSizeForm.resx">
+      <DependentUpon>GetSizeForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\GS1ValueEditorForm.resx">
+      <DependentUpon>GS1ValueEditorForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MainForm.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>MainForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PropertyGridForm.resx">
+      <DependentUpon>PropertyGridForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="QuietZoneEditorForm.resx">
+      <DependentUpon>QuietZoneEditorForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <Compile Include="PropertyGridForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="PropertyGridForm.Designer.cs">
+      <DependentUpon>PropertyGridForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="QuietZoneEditorForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="QuietZoneEditorForm.Designer.cs">
+      <DependentUpon>QuietZoneEditorForm.cs</DependentUpon>
+    </Compile>
+    <Content Include="App.ico" />
+  </ItemGroup>
+</Project>
