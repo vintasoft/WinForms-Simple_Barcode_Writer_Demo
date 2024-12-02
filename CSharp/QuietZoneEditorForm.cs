@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel;
 using System.Windows.Forms;
 
 using Vintasoft.Barcode;
@@ -43,6 +44,7 @@ namespace BarcodeDemo
         /// <summary>
         /// Get or sets barcode writer settings.
         /// </summary>
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public WriterSettings Settings
         {
             get

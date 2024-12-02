@@ -98,6 +98,7 @@ namespace BarcodeDemo.Controls
         /// <b>0</b> - barcode image size is calculated automatically.
         /// </value>
         /// <seealso cref="BarcodeImageSizeUnits"/>
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
         public double BarcodeImageWidth
         {
             get
@@ -122,6 +123,7 @@ namespace BarcodeDemo.Controls
         /// <b>0</b> - barcode image size is calculated automatically.
         /// </value>
         /// <seealso cref="BarcodeImageSizeUnits"/>
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
         public double BarcodeImageHeight
         {
             get
@@ -145,6 +147,7 @@ namespace BarcodeDemo.Controls
         /// <seealso cref="BarcodeImageWidth"/>
         /// <seealso cref="BarcodeImageHeight"/>
         /// <see cref="WriterSettings.Resolution"/>
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
         public UnitOfMeasure BarcodeImageSizeUnits
         {
             get
@@ -165,6 +168,7 @@ namespace BarcodeDemo.Controls
         /// <summary>
         /// Gets or sets the barcode symbology subset to encode.
         /// </summary>
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public BarcodeSymbologySubset BarcodeSymbologySubset
         {
             get
@@ -242,6 +246,7 @@ namespace BarcodeDemo.Controls
         /// Default value is <b>null</b>.
         /// </value>
         [Browsable(false)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public BarcodeGraphicsRenderer BarcodeRenderer
         {
             get
