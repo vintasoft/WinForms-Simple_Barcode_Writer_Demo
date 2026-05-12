@@ -30,9 +30,6 @@ namespace SimpleBarcodeWriterDemo
         /// </summary>
         static MainForm()
         {
-            // register the evaluation license for VintaSoft Barcode .NET SDK
-            Vintasoft.Barcode.BarcodeGlobalSettings.Register("REG_USER", "REG_EMAIL", "EXPIRATION_DATE", "REG_CODE");
-
 #if NETCOREAPP
             System.Text.Encoding.RegisterProvider(System.Text.CodePagesEncodingProvider.Instance);
 #endif
@@ -77,7 +74,7 @@ namespace SimpleBarcodeWriterDemo
 
         #region Methods
 
-        #region "File" menu
+        #region File menu
 
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -87,7 +84,7 @@ namespace SimpleBarcodeWriterDemo
         #endregion
 
 
-        #region "Barcode Image" menu
+        #region Barcode Image menu
 
         private void saveAsToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -159,7 +156,7 @@ namespace SimpleBarcodeWriterDemo
         #endregion
 
 
-        #region "View" menu
+        #region View menu
 
         private void sizeModeToolStripMenuItem_Click(object sender, EventArgs e)
         {

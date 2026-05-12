@@ -171,6 +171,8 @@ namespace BarcodeDemo.Controls
             twoDimensionalBarcodeComboBox.Items.Add(BarcodeSymbologySubsets.GS1DataMatrix);
             twoDimensionalBarcodeComboBox.Items.Add(BarcodeSymbologySubsets.GS1DotCode);
             twoDimensionalBarcodeComboBox.Items.Add(BarcodeSymbologySubsets.GS1QR);
+            twoDimensionalBarcodeComboBox.Items.Add(BarcodeSymbologySubsets.GS1DigitalLinkQR);
+            twoDimensionalBarcodeComboBox.Items.Add(BarcodeSymbologySubsets.GS1DigitalLinkDataMatrix);
             twoDimensionalBarcodeComboBox.Items.Add(BarcodeSymbologySubsets.MailmarkCmdmType7);
             twoDimensionalBarcodeComboBox.Items.Add(BarcodeSymbologySubsets.MailmarkCmdmType9);
             twoDimensionalBarcodeComboBox.Items.Add(BarcodeSymbologySubsets.MailmarkCmdmType29);
